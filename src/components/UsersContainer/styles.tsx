@@ -4,13 +4,13 @@ import styled from "styled-components";
 export const UsersContainer = styled.div`
   position: relative;
   display: flex;
-  width: inherit;
-  height: inherit;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
 `;
 
 export const FieldContainer = styled.div`
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,3 +28,12 @@ export const User = styled.div`
   border: 1px solid #380707;
   background-color: #670000;
 `;
+
+export const UserName = styled.div`
+  width: 9rem;
+  font-size: 2rem;
+  line-height: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
