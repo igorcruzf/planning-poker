@@ -30,7 +30,7 @@ const Board = ({user, handleSetUser, handleShouldChangeCard}: BoardProps) => {
     const [shouldRevealCards, setShouldRevealCards] = useState(false)
 
     useEffect( () => {
-        const newSocket = io('ws://localhost:3001')
+        const newSocket = io('wss://planning-poker-server-slaf.onrender.com')
         setSocket(newSocket)
     }, []);
 
