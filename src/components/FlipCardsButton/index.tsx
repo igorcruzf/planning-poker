@@ -70,7 +70,7 @@ export const FlipCardsButton = ({ shouldRevealCards, handleShouldChangeCard, han
     }
 
     return (
-        <Button onClick={handleClick} disabled={!haveAllPlayersVoted}>
+        <Button onClick={handleClick} disabled={!haveAllPlayersVoted && !isRevealed}>
             {buttonMessage}
         </Button>
     );

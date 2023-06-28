@@ -7,8 +7,6 @@ import Loading from "../Loading";
 
 interface BoardProps {
     user: UserData;
-
-    handleSetUser: (user: UserData) => void;
     handleShouldChangeCard: (shouldChangeCard: boolean) => void;
 }
 
@@ -19,7 +17,7 @@ export interface UserData {
     currentUser: boolean;
 }
 
-const Board = ({user, handleSetUser, handleShouldChangeCard}: BoardProps) => {
+const Board = ({user, handleShouldChangeCard}: BoardProps) => {
 
     const [flipCards, setFlipCards] = useState(false)
     const [users, setUsers] = useState<UserData[]>([user])
@@ -43,11 +41,10 @@ const Board = ({user, handleSetUser, handleShouldChangeCard}: BoardProps) => {
 
     useEffect( () => {
         socket?.on('startReveal', () => {
+            console.log("ue")
             setFlipCards(true)
             setShouldRevealCards(true)
             handleShouldChangeCard(false)
-            user.votedValue = "-"
-            handleSetUser(user)
         })
 
         return () => {
@@ -91,6 +88,8 @@ const Board = ({user, handleSetUser, handleShouldChangeCard}: BoardProps) => {
 
         socket?.on(`update`, (updatedUser) => {
             if (updatedUser.id !== user.id) {
+                console.log("u2e")
+                console.log(JSON.stringify(updatedUser))
                 setUsers((prevUsers) => {
                     const userIndex = prevUsers.findIndex((u) => u.id === updatedUser.id);
                     const updatedUsers = [...prevUsers];
@@ -123,9 +122,6 @@ const Board = ({user, handleSetUser, handleShouldChangeCard}: BoardProps) => {
 
     useEffect(() => {
         if (shouldEmitUpdate) {
-            if(user.votedValue == "" && flipCards) {
-                user.votedValue = "-"
-            }
             socket?.emit('update', user);
             setShouldEmitUpdate(false);
         }

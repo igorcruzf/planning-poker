@@ -1,6 +1,8 @@
 import React from "react";
 import {BackCardComponent, SelectedCardContainer, FrontCardComponent} from "./styles";
 import {useSpring} from "@react-spring/web";
+import Card from "../Card";
+import {getCardColor} from "../CardHand/constants";
 
 interface SelectedCardProps {
     value: string;
@@ -21,12 +23,12 @@ const SelectedCard = React.forwardRef<HTMLDivElement, SelectedCardProps>(({value
                 opacity: opacity.to(o => 1 - o),
                 transform
             }}/>
-            <FrontCardComponent color={'black'} style={{
-                opacity,
+            <FrontCardComponent color={getCardColor(value)} selected={value != ""} style={{
+                opacity: opacity,
                 transform,
                 rotateY: '-180deg'
             }}>
-                {value}
+                <Card value={value} isSelected={false}/>
             </FrontCardComponent>
         </SelectedCardContainer>
     );

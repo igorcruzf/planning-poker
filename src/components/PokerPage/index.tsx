@@ -46,12 +46,9 @@ const PokerPage = () => {
         setShouldChangeCard(shouldChange)
     }
 
-    function handleChangeUser(user: UserData) {
-        setUser(user);
-    }
 
     return <>
-        <Board user={user} handleShouldChangeCard={handleShouldChangeCard} handleSetUser={handleChangeUser}/>
+        <Board user={user} handleShouldChangeCard={handleShouldChangeCard} />
         <CardHand handleSelectCardValue={handleSelectCardValue} shouldChangeCard={shouldChangeCard}/>
     </>
 }

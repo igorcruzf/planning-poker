@@ -1,6 +1,6 @@
 import styled, {css} from "styled-components";
 import {animated} from "@react-spring/web";
-import {Card} from "../Card/styles";
+import {CardContainer} from "../Card/styles";
 
 const getBackground = (selected: boolean) => {
     if (selected) {
@@ -13,6 +13,14 @@ const getBackground = (selected: boolean) => {
     } else {
         return css`
           background: #a2a2a2;
+        `;
+    }
+};
+
+const getFrontBackground = (selected: boolean) => {
+    if (selected) {
+        return css`
+          background: #a2a2a2 !important;
         `;
     }
 };
@@ -34,9 +42,10 @@ export const BackCardComponent = styled(animated.div)<{selected: boolean}>`
   border-radius: 1rem;
 `;
 
-export const FrontCardComponent = styled(Card)`
+export const FrontCardComponent = styled(CardContainer)<{selected: boolean}>`
   position: absolute;
   height: inherit;
+  ${props => getFrontBackground(props.selected)};
   width: inherit;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 2px;
 `;

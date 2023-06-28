@@ -1,15 +1,13 @@
 import {useEffect, useState} from 'react';
 import {CardHandContainer, CardIndexDiv} from "./styles";
 import Card from "../Card";
+import {cards} from "./constants";
 
 interface CardHandProps {
     handleSelectCardValue: (value: string) => void;
     shouldChangeCard: boolean
 }
 const CardHand = ({handleSelectCardValue, shouldChangeCard}: CardHandProps) => {
-    const cards = ["PP", "P", "M", "G"];
-    let currentColor: 'red' | 'black' = 'red';
-
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
     const [isSelectedByKeyBoard, setIsSelectedByKeyBoard] = useState(false)
@@ -36,15 +34,7 @@ const CardHand = ({handleSelectCardValue, shouldChangeCard}: CardHandProps) => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [shouldChangeCard, cards, selectedCardIndex, handleSelectCardValue]);
-
-    const changeCurrentColor = () => {
-        if (currentColor === "red") {
-            currentColor = "black";
-        } else {
-            currentColor = "red";
-        }
-    };
+    }, [shouldChangeCard, selectedCardIndex, handleSelectCardValue]);
 
     const handleCardClick = (value: string, index: number) => {
         setIsSelectedByKeyBoard(false)
@@ -64,12 +54,10 @@ const CardHand = ({handleSelectCardValue, shouldChangeCard}: CardHandProps) => {
     return (
         <CardHandContainer>
             {cards.map((value, index) => {
-                changeCurrentColor();
                 return (
                     <div key={index}>
                         <Card
                             value={value}
-                            color={currentColor}
                             onClick={() => handleCardClick(value, index)}
                             isSelected={!isSelectedByKeyBoard && selectedCard === value && selectedCardIndex === index}
                         />
