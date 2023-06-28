@@ -7,6 +7,8 @@ import Loading from "../Loading";
 
 interface BoardProps {
     user: UserData;
+
+    handleSetUser: (user: UserData) => void;
     handleShouldChangeCard: (shouldChangeCard: boolean) => void;
 }
 
@@ -17,7 +19,7 @@ export interface UserData {
     currentUser: boolean;
 }
 
-const Board = ({user, handleShouldChangeCard}: BoardProps) => {
+const Board = ({user, handleSetUser, handleShouldChangeCard}: BoardProps) => {
 
     const [flipCards, setFlipCards] = useState(false)
     const [users, setUsers] = useState<UserData[]>([user])
@@ -28,7 +30,7 @@ const Board = ({user, handleShouldChangeCard}: BoardProps) => {
     const [shouldRevealCards, setShouldRevealCards] = useState(false)
 
     useEffect( () => {
-        const newSocket = io('wss://planning-poker-server-slaf.onrender.com')
+        const newSocket = io('ws://localhost:3001')
         setSocket(newSocket)
     }, []);
 
@@ -38,6 +40,20 @@ const Board = ({user, handleShouldChangeCard}: BoardProps) => {
             socket.emit('login', user)
         }
     }, [isLogged, socket, user]);
+
+    useEffect( () => {
+        socket?.on('startReveal', () => {
+            setFlipCards(true)
+            setShouldRevealCards(true)
+            handleShouldChangeCard(false)
+            user.votedValue = "-"
+            handleSetUser(user)
+        })
+
+        return () => {
+            socket?.off('startReveal');
+        };
+    })
 
     useEffect( () => {
         socket?.on(`start`, (startUsers) => {
@@ -53,6 +69,7 @@ const Board = ({user, handleShouldChangeCard}: BoardProps) => {
             });
             setIsLoading(false)
         });
+
         return () => {
             socket?.off('start');
         };
@@ -106,14 +123,17 @@ const Board = ({user, handleShouldChangeCard}: BoardProps) => {
 
     useEffect(() => {
         if (shouldEmitUpdate) {
+            if(user.votedValue == "" && flipCards) {
+                user.votedValue = "-"
+            }
             socket?.emit('update', user);
             setShouldEmitUpdate(false);
         }
-    }, [socket, user, shouldEmitUpdate]);
+    }, [socket, user, shouldEmitUpdate, flipCards]);
 
     useEffect(() => {
         setUsers((prevUsers) => {
-            const userIndex = prevUsers.findIndex((u) => u.currentUser);
+            const userIndex = prevUsers.findIndex((u) => u.id === user.id);
             const updatedUsers = [...prevUsers];
             updatedUsers[userIndex] = user;
 
@@ -147,6 +167,7 @@ const Board = ({user, handleShouldChangeCard}: BoardProps) => {
                                 handleFlipAction={handleFlipCardsAction}
                                 haveAllPlayersVoted={haveAllPlayersVoted()}
                                 shouldRevealCards={shouldRevealCards}
+                                isFlipped={flipCards}
                             />
                         </ButtonContainer>
                     </BoardContainer>

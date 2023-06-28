@@ -32,7 +32,7 @@ export const User = styled.div`
 export const UserName = styled.div`
   width: 9rem;
   font-size: 2rem;
-  line-height: 2rem;
+  line-height: 3rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

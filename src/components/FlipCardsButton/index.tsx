@@ -8,12 +8,17 @@ interface FlipCardsButtonProps {
     handleFlipAction: () => void;
     haveAllPlayersVoted: boolean;
     shouldRevealCards: boolean;
+    isFlipped: boolean
 }
 
-export const FlipCardsButton = ({ shouldRevealCards, handleShouldChangeCard, handleFlipAction, haveAllPlayersVoted }: FlipCardsButtonProps) => {
+export const FlipCardsButton = ({ shouldRevealCards, handleShouldChangeCard, handleFlipAction, haveAllPlayersVoted, isFlipped }: FlipCardsButtonProps) => {
     const [countdown, setCountdown] = useState<number | null>(null);
     const [buttonMessage, setButtonMessage] = useState('Aguardando todos votarem...')
-    const [isRevealed, setIsRevealed] = useState(false)
+    const [isRevealed, setIsRevealed] = useState(isFlipped)
+
+    useEffect( () => {
+        setIsRevealed(isFlipped)
+    }, [isFlipped])
 
     useEffect(() => {
         let intervalId: NodeJS.Timer;
@@ -48,13 +53,13 @@ export const FlipCardsButton = ({ shouldRevealCards, handleShouldChangeCard, han
     }, [countdown, handleFlipAction, haveAllPlayersVoted, isRevealed]);
 
     useEffect( () => {
-        if(shouldRevealCards && !isRevealed) {
+        if(shouldRevealCards && !isRevealed && !isFlipped) {
             setCountdown(3);
         } else if(isRevealed && !shouldRevealCards) {
             handleFlipAction();
             setIsRevealed(false);
         }
-    }, [shouldRevealCards, isRevealed, handleFlipAction])
+    }, [shouldRevealCards, isRevealed, handleFlipAction, isFlipped])
     function handleClick() {
         if(isRevealed) {
             handleShouldChangeCard(false)
