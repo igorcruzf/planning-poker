@@ -17,8 +17,9 @@ const StartPage = () => {
     }
 
     function handleStartClick(){
-        if(name.length !== 0)
-        navigate('poker', {state: {name, room}})
+        if(name.length !== 0 && room.length !== 0){
+            navigate('poker', {state: {name, room}})
+        }
     }
 
     return <StartPageContainer>
