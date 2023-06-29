@@ -13,8 +13,9 @@ const PokerPage = () => {
         id: uuidv4(),
         name: "",
         votedValue: selectedCardValue,
-        currentUser: true,
+        room: "",
     });
+    const [updateUser, setUpdateUser] = useState(false)
 
     const location = useLocation()
     const navigate = useNavigate()
@@ -23,13 +24,14 @@ const PokerPage = () => {
         if(!location.state) {
             navigate("/")
         }
-        const { name } = location.state
+        const { name, room } = location.state
 
         setUser((prevState) => {
             prevState.name = name
+            prevState.room = room
             return prevState
         })
-
+        setUpdateUser(true)
     }, [location.state, navigate])
 
     function handleSelectCardValue(selectedValue: string) {
@@ -49,10 +51,12 @@ const PokerPage = () => {
     }
 
 
-    return <>
-        <Board user={user} handleShouldChangeCard={handleShouldChangeCard} isLoading={isLoading} handleChangeIsLoading={handleChangeIsLoading} />
-        <CardHand handleSelectCardValue={handleSelectCardValue} shouldChangeCard={shouldChangeCard} isLoading={isLoading}/>
-    </>
+    return <> {
+        !updateUser? <></> : <>
+            <Board user={user} handleShouldChangeCard={handleShouldChangeCard} isLoading={isLoading} handleChangeIsLoading={handleChangeIsLoading} />
+            <CardHand handleSelectCardValue={handleSelectCardValue} shouldChangeCard={shouldChangeCard} isLoading={isLoading}/>
+        </>
+    } </>
 }
 
 export default PokerPage

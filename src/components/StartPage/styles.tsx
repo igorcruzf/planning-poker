@@ -6,11 +6,11 @@ export const Title = styled.div `
   font-size: 5rem;
   margin-bottom: 5rem;
 `
-export const NameLabel = styled.div`
+export const Label = styled.div`
   font-size: 2rem;
   color: #595959;
 `;
-export const NameInput = styled.input`
+export const Input = styled.input`
   width: 19rem;
   height: 4rem;
   border: 2px solid #ababab;

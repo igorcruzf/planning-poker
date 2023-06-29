@@ -16,7 +16,7 @@ export interface UserData {
     id: string;
     name: string;
     votedValue: string;
-    currentUser: boolean;
+    room: string;
 }
 
 const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}: BoardProps) => {
@@ -29,7 +29,7 @@ const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}:
     const [shouldRevealCards, setShouldRevealCards] = useState(false)
 
     useEffect( () => {
-        const newSocket = io('wss://planning-poker-server-slaf.onrender.com')
+        const newSocket = io('ws://localhost:3001')
         setSocket(newSocket)
     }, []);
 
@@ -42,12 +42,10 @@ const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}:
 
     useEffect( () => {
         socket?.on('startReveal', () => {
-            console.log("ue")
             setFlipCards(true)
             setShouldRevealCards(true)
             handleShouldChangeCard(false)
         })
-
         return () => {
             socket?.off('startReveal');
         };
@@ -71,7 +69,7 @@ const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}:
         return () => {
             socket?.off('start');
         };
-    }, [socket])
+    }, [handleChangeIsLoading, socket])
 
     useEffect( () => {
         socket?.on('login', (newUser) => {
@@ -89,8 +87,6 @@ const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}:
 
         socket?.on(`update`, (updatedUser) => {
             if (updatedUser.id !== user.id) {
-                console.log("u2e")
-                console.log(JSON.stringify(updatedUser))
                 setUsers((prevUsers) => {
                     const userIndex = prevUsers.findIndex((u) => u.id === updatedUser.id);
                     const updatedUsers = [...prevUsers];
@@ -170,7 +166,6 @@ const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}:
                     </BoardContainer>
                 </UsersContainer>
             </WoodBoarder>
-
         }
     </div>
 }
