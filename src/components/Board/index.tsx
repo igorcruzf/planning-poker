@@ -31,6 +31,10 @@ const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}:
     useEffect( () => {
         const newSocket = io('wss://planning-poker-server-slaf.onrender.com')
         setSocket(newSocket)
+
+        return () => {
+            newSocket.disconnect();
+        };
     }, []);
 
     useEffect( () => {
