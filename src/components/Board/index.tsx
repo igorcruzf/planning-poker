@@ -8,6 +8,8 @@ import Loading from "../Loading";
 interface BoardProps {
     user: UserData;
     handleShouldChangeCard: (shouldChangeCard: boolean) => void;
+    isLoading: boolean;
+    handleChangeIsLoading: (isLoading: boolean) => void;
 }
 
 export interface UserData {
@@ -17,13 +19,12 @@ export interface UserData {
     currentUser: boolean;
 }
 
-const Board = ({user, handleShouldChangeCard}: BoardProps) => {
+const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}: BoardProps) => {
 
     const [flipCards, setFlipCards] = useState(false)
     const [users, setUsers] = useState<UserData[]>([user])
     const [socket, setSocket] = useState<Socket>()
     const [isLogged, setIsLogged] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
     const [shouldEmitUpdate, setShouldEmitUpdate] = useState(false);
     const [shouldRevealCards, setShouldRevealCards] = useState(false)
 
@@ -64,7 +65,7 @@ const Board = ({user, handleShouldChangeCard}: BoardProps) => {
                 }
                 return [...prevUsers, ...newUsers]
             });
-            setIsLoading(false)
+            handleChangeIsLoading(false)
         });
 
         return () => {

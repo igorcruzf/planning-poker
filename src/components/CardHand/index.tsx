@@ -5,9 +5,10 @@ import {cards} from "./constants";
 
 interface CardHandProps {
     handleSelectCardValue: (value: string) => void;
-    shouldChangeCard: boolean
+    shouldChangeCard: boolean;
+    isLoading: boolean;
 }
-const CardHand = ({handleSelectCardValue, shouldChangeCard}: CardHandProps) => {
+const CardHand = ({handleSelectCardValue, shouldChangeCard, isLoading}: CardHandProps) => {
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
     const [isSelectedByKeyBoard, setIsSelectedByKeyBoard] = useState(false)
@@ -51,25 +52,27 @@ const CardHand = ({handleSelectCardValue, shouldChangeCard}: CardHandProps) => {
         }
     };
 
-    return (
-        <CardHandContainer>
-            {cards.map((value, index) => {
-                return (
-                    <div key={index}>
-                        <Card
-                            value={value}
-                            onClick={() => handleCardClick(value, index)}
-                            isSelected={!isSelectedByKeyBoard && selectedCard === value && selectedCardIndex === index}
-                        />
-                        <CardIndexDiv>
-                            {index+1}
-                        </CardIndexDiv>
-                    </div>
+    return <div>{
+            isLoading? <></> :
+                <CardHandContainer>
+                    {cards.map((value, index) => {
+                        return (
+                            <div key={index}>
+                                <Card
+                                    value={value}
+                                    onClick={() => handleCardClick(value, index)}
+                                    isSelected={!isSelectedByKeyBoard && selectedCard === value && selectedCardIndex === index}
+                                />
+                                <CardIndexDiv>
+                                    {index + 1}
+                                </CardIndexDiv>
+                            </div>
 
-                );
-            })}
-        </CardHandContainer>
-    );
+                        );
+                    })}
+                </CardHandContainer>
+
+        }</div>;
 };
 
 export default CardHand;

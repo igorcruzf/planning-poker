@@ -8,6 +8,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 const PokerPage = () => {
     const [selectedCardValue, setSelectedCardValue] = useState<string>("")
     const [shouldChangeCard, setShouldChangeCard] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
     const [user, setUser] = useState<UserData>({
         id: uuidv4(),
         name: "",
@@ -31,9 +32,6 @@ const PokerPage = () => {
 
     }, [location.state, navigate])
 
-
-
-
     function handleSelectCardValue(selectedValue: string) {
         setSelectedCardValue(selectedValue);
         setUser((prevUser) => ({
@@ -46,10 +44,14 @@ const PokerPage = () => {
         setShouldChangeCard(shouldChange)
     }
 
+    function handleChangeIsLoading(isLoading: boolean) {
+        setIsLoading(isLoading)
+    }
+
 
     return <>
-        <Board user={user} handleShouldChangeCard={handleShouldChangeCard} />
-        <CardHand handleSelectCardValue={handleSelectCardValue} shouldChangeCard={shouldChangeCard}/>
+        <Board user={user} handleShouldChangeCard={handleShouldChangeCard} isLoading={isLoading} handleChangeIsLoading={handleChangeIsLoading} />
+        <CardHand handleSelectCardValue={handleSelectCardValue} shouldChangeCard={shouldChangeCard} isLoading={isLoading}/>
     </>
 }
 
