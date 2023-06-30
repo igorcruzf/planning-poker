@@ -7,6 +7,7 @@ import Loading from "../Loading";
 
 interface BoardProps {
     user: UserData;
+    eraseUserVote: () => void;
     handleShouldChangeCard: (shouldChangeCard: boolean) => void;
     isLoading: boolean;
     handleChangeIsLoading: (isLoading: boolean) => void;
@@ -19,7 +20,7 @@ export interface UserData {
     room: string;
 }
 
-const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}: BoardProps) => {
+const Board = ({user, eraseUserVote, handleShouldChangeCard, isLoading, handleChangeIsLoading}: BoardProps) => {
 
     const [flipCards, setFlipCards] = useState(false)
     const [users, setUsers] = useState<UserData[]>([user])
@@ -113,13 +114,16 @@ const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}:
             if(shouldReveal != shouldRevealCards) {
                 handleShouldChangeCard(!shouldReveal)
                 setShouldRevealCards(shouldReveal)
+                if(!shouldReveal){
+                    eraseUserVote()
+                }
             }
         })
 
         return () => {
             socket?.off('reveal')
         }
-    }, [handleShouldChangeCard, shouldRevealCards, socket])
+    }, [handleShouldChangeCard, eraseUserVote, shouldRevealCards, socket])
 
     useEffect(() => {
         if (shouldEmitUpdate) {
@@ -151,6 +155,9 @@ const Board = ({user, handleShouldChangeCard, isLoading, handleChangeIsLoading}:
         handleShouldChangeCard(!shouldReveal)
         setShouldRevealCards(shouldReveal)
         socket?.emit('reveal', shouldReveal)
+        if(!shouldReveal){
+            eraseUserVote()
+        }
     }
 
     return  <div>

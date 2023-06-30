@@ -9,7 +9,7 @@ export const Spinner = styled(Card)`
   background-size: 2rem 2rem;
   z-index: 1;
   position: absolute;
-
+  border: 1px solid black;
 `;
 
 export const Wrapper = styled.div`

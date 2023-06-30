@@ -4,14 +4,24 @@ import Card from "../Card";
 import {cards} from "./constants";
 
 interface CardHandProps {
+    cardValue: string;
     handleSelectCardValue: (value: string) => void;
     shouldChangeCard: boolean;
     isLoading: boolean;
 }
-const CardHand = ({handleSelectCardValue, shouldChangeCard, isLoading}: CardHandProps) => {
+const CardHand = ({cardValue, handleSelectCardValue, shouldChangeCard, isLoading}: CardHandProps) => {
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
     const [isSelectedByKeyBoard, setIsSelectedByKeyBoard] = useState(false)
+
+    useEffect( () => {
+        if(cardValue == "") {
+            setSelectedCard(null);
+            setSelectedCardIndex(null);
+            setIsSelectedByKeyBoard(false)
+        }
+    }, [cardValue])
+
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             const keyIndex = Number(event.key) - 1;

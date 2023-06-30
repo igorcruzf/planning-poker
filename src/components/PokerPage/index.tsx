@@ -34,8 +34,11 @@ const PokerPage = () => {
         setUpdateUser(true)
     }, [location.state, navigate])
 
+    useEffect( () => {
+        setSelectedCardValue(user.votedValue)
+    }, [user])
+
     function handleSelectCardValue(selectedValue: string) {
-        setSelectedCardValue(selectedValue);
         setUser((prevUser) => ({
             ...prevUser,
             votedValue: selectedValue,
@@ -50,11 +53,15 @@ const PokerPage = () => {
         setIsLoading(isLoading)
     }
 
+    function eraseUserVote() {
+        handleSelectCardValue("")
+    }
+
 
     return <> {
         !updateUser? <></> : <>
-            <Board user={user} handleShouldChangeCard={handleShouldChangeCard} isLoading={isLoading} handleChangeIsLoading={handleChangeIsLoading} />
-            <CardHand handleSelectCardValue={handleSelectCardValue} shouldChangeCard={shouldChangeCard} isLoading={isLoading}/>
+            <Board user={user} eraseUserVote={eraseUserVote} handleShouldChangeCard={handleShouldChangeCard} isLoading={isLoading} handleChangeIsLoading={handleChangeIsLoading} />
+            <CardHand cardValue={selectedCardValue} handleSelectCardValue={handleSelectCardValue} shouldChangeCard={shouldChangeCard} isLoading={isLoading}/>
         </>
     } </>
 }
