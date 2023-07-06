@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {FieldContainer, User, UserName, UsersContainer} from "./styles";
+import {FieldContainer, SelectedCardContainer, User, UserName, UsersContainer} from "./styles";
 import SelectedCard from "../SelectedCard";
 import {UserData} from "../Board";
 
@@ -10,16 +10,12 @@ interface UsersProps {
 }
 
 function useWindowSize() {
-    // Initialize state with undefined width/height so server and client renders match
-    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
     const [windowSize, setWindowSize] = useState({
         width: 0,
         height: 0,
     });
     useEffect(() => {
-        // Handler to call on window resize
         function handleResize() {
-            // Set window width/height to state
             setWindowSize({
                 width: window.innerWidth,
                 height: window.innerHeight,
@@ -27,17 +23,24 @@ function useWindowSize() {
         }
         // Add event listener
         window.addEventListener("resize", handleResize);
-        // Call handler right away so state gets updated with initial window size
         handleResize();
-        // Remove event listener on cleanup
         return () => window.removeEventListener("resize", handleResize);
-    }, []); // Empty array ensures that effect is only run on mount
+    }, []);
     return windowSize;
 }
 const Users = ({ flipCards, children, users }: UsersProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const userRefs = useRef<(HTMLDivElement | null)[]>([]);
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [highlightedValue, setHighlightedValue] = useState<string | null>(null);
+
+    const handleMouseEnter = (value: string) => {
+        setHighlightedValue(value);
+    };
+
+    const handleMouseLeave = () => {
+        setHighlightedValue(null);
+    };
     const size = useWindowSize()
 
     useEffect(() => {
@@ -85,15 +88,26 @@ const Users = ({ flipCards, children, users }: UsersProps) => {
         }
 
         distributeUserContainers()
-    }, [users, size]);
+    }, [users, size, highlightedValue]);
 
     const createFields = () => {
         const fields = [];
 
         for (let i = 0; i < users.length; i++) {
+            const isHighlighted = !flipCards || highlightedValue === null || users[i].votedValue === highlightedValue;
             fields.push(
                 <FieldContainer key={i}>
-                    <SelectedCard ref={(el: HTMLDivElement | null) => (cardRefs.current[i] = el)} flipped={flipCards} value={users[i].votedValue}/>
+                    <SelectedCardContainer
+                        onMouseEnter={() => handleMouseEnter(users[i].votedValue)}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <SelectedCard
+                            ref={(el: HTMLDivElement | null) => (cardRefs.current[i] = el)}
+                            flipped={flipCards}
+                            value={users[i].votedValue}
+                            highlighted={isHighlighted}
+                        />
+                    </SelectedCardContainer>
                     <User ref={(el: HTMLDivElement | null) => (userRefs.current[i] = el)}>
                         <UserName>
                             {users[i].name}

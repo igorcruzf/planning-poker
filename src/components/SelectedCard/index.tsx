@@ -7,9 +7,10 @@ import {getCardColor} from "../CardHand/constants";
 interface SelectedCardProps {
     value: string;
     flipped: boolean;
+    highlighted: boolean;
 }
 
-const SelectedCard = React.forwardRef<HTMLDivElement, SelectedCardProps>(({value, flipped}: SelectedCardProps, ref) => {
+const SelectedCard = React.forwardRef<HTMLDivElement, SelectedCardProps>(({value, flipped, highlighted}: SelectedCardProps, ref) => {
 
     const { transform, opacity } = useSpring({
         opacity: flipped ? 1 : 0,
@@ -18,7 +19,7 @@ const SelectedCard = React.forwardRef<HTMLDivElement, SelectedCardProps>(({value
     })
 
     return (
-        <SelectedCardContainer ref={ref}>
+        <SelectedCardContainer highlighted={highlighted.toString()} ref={ref}>
             <BackCardComponent selected={value != ""} style={{
                 opacity: opacity.to(o => 1 - o),
                 transform

@@ -25,10 +25,15 @@ const getFrontBackground = (selected: boolean) => {
     }
 };
 
-export const SelectedCardContainer = styled.div`
+export const SelectedCardContainer = styled.div<{ highlighted: string }>`
   position: absolute;
   height: 7rem;
   width: 4rem;
+  
+    ${props => (props.highlighted === 'false') &&
+              `
+          opacity: 0.6;
+      `}
 `;
 
 export const BackCardComponent = styled(animated.div)<{selected: boolean}>`

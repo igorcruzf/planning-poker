@@ -4,6 +4,7 @@ import {FlipCardsButton} from "../FlipCardsButton";
 import {useEffect, useState} from "react";
 import {io, Socket} from "socket.io-client";
 import Loading from "../Loading";
+import Confetti from 'react-confetti';
 
 interface BoardProps {
     user: UserData;
@@ -160,6 +161,14 @@ const Board = ({user, eraseUserVote, handleShouldChangeCard, isLoading, handleCh
         }
     }
 
+    function haveAllPlayersSameVotedValue() {
+        const firstVotedValue = users[0].votedValue;
+        return users.every(user => user.votedValue === firstVotedValue);
+    }
+    function shouldRunConfetti() {
+        return flipCards && haveAllPlayersSameVotedValue()
+    }
+
     return  <div>
         { isLoading ? <Loading/> :
             <WoodBoarder>
@@ -176,6 +185,7 @@ const Board = ({user, eraseUserVote, handleShouldChangeCard, isLoading, handleCh
                         </ButtonContainer>
                     </BoardContainer>
                 </UsersContainer>
+                {shouldRunConfetti() && <Confetti initialVelocityX={7} />}
             </WoodBoarder>
         }
     </div>

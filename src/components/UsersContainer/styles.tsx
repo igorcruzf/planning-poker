@@ -16,6 +16,13 @@ export const FieldContainer = styled.div`
   justify-content: center;
 `;
 
+export const SelectedCardContainer = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const User = styled.div`
   position: absolute;
   display: flex;
