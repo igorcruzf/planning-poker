@@ -2,7 +2,7 @@
 
 ## Sons (`src/assets/sounds/`)
 
-Todos os sons são CC0 1.0 Universal (domínio público). Os arquivos são cópias do pacote original, sem conversão nem edição. Os downloads saíram do espelho `github.com/Mcamento8/open-game-sfx-index`, que mantém os arquivos originais da Kenney e a prova de licença (`ATTRIBUTION.md`). A Kenney bloqueia download por `curl` (HTTP 403).
+Todos os sons são CC0 1.0 Universal (domínio público). Os arquivos são cópias do pacote original, sem conversão nem edição. Os quatro sons da Kenney (`chip`, `card`, `shuffle` e `win`) saíram do espelho `github.com/Mcamento8/open-game-sfx-index`, que mantém os arquivos originais da Kenney e a prova de licença (`ATTRIBUTION.md`). A Kenney bloqueia download por `curl` (HTTP 403). O rufar (`drumroll.ogg`) vem do BigSoundBank, e o site só responde ao `curl` com um User-Agent de navegador.
 
 | Arquivo | Título original | Autor | Página da licença | URL do download | Licença | sha256 |
 |---|---|---|---|---|---|---|
@@ -10,10 +10,13 @@ Todos os sons são CC0 1.0 Universal (domínio público). Os arquivos são cópi
 | `card.ogg` | card place 1 (pacote casino-audio) | Kenney | https://kenney.nl/assets/casino-audio | https://raw.githubusercontent.com/Mcamento8/open-game-sfx-index/main/audio/casino-audio/card-place-1.ogg | CC0 1.0 | d8f26c33a665dcbdcc6f632f6050bc9dd548feb0d4942d4547615926d3926810 |
 | `shuffle.ogg` | card shuffle (pacote casino-audio) | Kenney | https://kenney.nl/assets/casino-audio | https://raw.githubusercontent.com/Mcamento8/open-game-sfx-index/main/audio/casino-audio/card-shuffle.ogg | CC0 1.0 | 96c84883a30845ede723a4cf2e8369e9837e7dd4e0d4eb0212b0a7ed21b0f544 |
 | `win.ogg` | jingles HIT11 (pacote music-jingles) | Kenney | https://kenney.nl/assets/music-jingles | https://raw.githubusercontent.com/Mcamento8/open-game-sfx-index/main/audio/music-jingles/jingles_HIT11.ogg | CC0 1.0 | 40d6f3fb92225d039a9196c5cda98c9366efdc837c10b9b6d01d94dfafae8ec9 |
+| `drumroll.ogg` | Drum roll 3 M (BigSoundBank, id 2407) | Joseph Sardin | https://bigsoundbank.com/drum-roll-3-m-s2407.html | https://bigsoundbank.com/UPLOAD/ogg/2407.ogg | CC0 1.0 | d139a781d9bb45ff1a994b8f65a89c398cfe907b61203f40a6520c752ff7cacf |
 
 Licença CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
 
 Prova: a Kenney declara CC0 nas páginas dos pacotes (https://kenney.nl/assets/casino-audio e https://kenney.nl/assets/music-jingles). O espelho `ATTRIBUTION.md` (https://github.com/Mcamento8/open-game-sfx-index/blob/main/ATTRIBUTION.md) registra a mesma verificação. A leitura direta da licença na página do casino não funcionou por fetch, então a confirmação dela depende do espelho.
+
+Prova do rufar: a página https://bigsoundbank.com/drum-roll-3-m-s2407.html declara "CC0 (public domain)" na seção de licença, e a página https://bigsoundbank.com/licenses.html lista "CC0 1.0 Universal" com o link https://creativecommons.org/publicdomain/zero/1.0/. O autor, Joseph Sardin, declara a liberação CC0 no site.
 
 ## Fontes
 
