@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-22 -64 44 122">
+  <g id="yakult">
+    <path d="M-10,-48 L10,-48 C14,-40 16,-30 14,-20 C12,-12 12,-4 16,6 C20,18 20,40 16,56 L-16,56 C-20,40 -20,18 -16,6 C-12,-4 -12,-12 -14,-20 C-16,-30 -14,-40 -10,-48 Z" fill="#F4F1EA" stroke="#BDB4A3" stroke-width="2"/>
+    <rect x="-12" y="-62" width="24" height="14" rx="3" fill="#D7261E"/>
+    <rect x="-17" y="14" width="34" height="22" fill="#D7261E"/>
+    <text x="0" y="30" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" font-family="Inter, sans-serif">YAK</text>
+  </g>
+</svg>
