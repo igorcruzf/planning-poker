@@ -10,7 +10,10 @@ Todos os sons são CC0 1.0 Universal (domínio público). Os arquivos são cópi
 | `card.ogg` | card place 1 (pacote casino-audio) | Kenney | https://kenney.nl/assets/casino-audio | https://raw.githubusercontent.com/Mcamento8/open-game-sfx-index/main/audio/casino-audio/card-place-1.ogg | CC0 1.0 | d8f26c33a665dcbdcc6f632f6050bc9dd548feb0d4942d4547615926d3926810 |
 | `shuffle.ogg` | card shuffle (pacote casino-audio) | Kenney | https://kenney.nl/assets/casino-audio | https://raw.githubusercontent.com/Mcamento8/open-game-sfx-index/main/audio/casino-audio/card-shuffle.ogg | CC0 1.0 | 96c84883a30845ede723a4cf2e8369e9837e7dd4e0d4eb0212b0a7ed21b0f544 |
 | `win.ogg` | jingles HIT11 (pacote music-jingles) | Kenney | https://kenney.nl/assets/music-jingles | https://raw.githubusercontent.com/Mcamento8/open-game-sfx-index/main/audio/music-jingles/jingles_HIT11.ogg | CC0 1.0 | 40d6f3fb92225d039a9196c5cda98c9366efdc837c10b9b6d01d94dfafae8ec9 |
-| `drumroll` | **pendente**: sem fonte CC0 baixável ainda | — | — | — | — | — |
+
+Licença CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+
+Prova: a Kenney declara CC0 nas páginas dos pacotes (https://kenney.nl/assets/casino-audio e https://kenney.nl/assets/music-jingles). O espelho `ATTRIBUTION.md` (https://github.com/Mcamento8/open-game-sfx-index/blob/main/ATTRIBUTION.md) registra a mesma verificação. A leitura direta da licença na página do casino não funcionou por fetch, então a confirmação dela depende do espelho.
 
 ## Fontes
 
