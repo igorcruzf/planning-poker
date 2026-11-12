@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import {type ReactNode, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {FieldContainer, SelectedCardContainer, User, UserName, UsersContainer} from "./styles";
 import SelectedCard from "../SelectedCard";
-import {UserData} from "../Board";
+import type {UserData} from "../Board";
 
 interface UsersProps {
     flipCards: boolean;
-    children: React.ReactNode;
+    children: ReactNode;
     users: UserData[]
 }
 
@@ -21,7 +21,6 @@ function useWindowSize() {
                 height: window.innerHeight,
             });
         }
-        // Add event listener
         window.addEventListener("resize", handleResize);
         handleResize();
         return () => window.removeEventListener("resize", handleResize);
@@ -43,7 +42,7 @@ const Users = ({ flipCards, children, users }: UsersProps) => {
     };
     const size = useWindowSize()
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const distributeUserContainers = () => {
             const container = containerRef.current;
             function distributeCards(step: number, containerWidth: number, containerHeight: number) {
@@ -88,7 +87,7 @@ const Users = ({ flipCards, children, users }: UsersProps) => {
         }
 
         distributeUserContainers()
-    }, [users, size, highlightedValue]);
+    }, [users, size]);
 
     const createFields = () => {
         const fields = [];
@@ -96,19 +95,19 @@ const Users = ({ flipCards, children, users }: UsersProps) => {
         for (let i = 0; i < users.length; i++) {
             const isHighlighted = !flipCards || highlightedValue === null || users[i].votedValue === highlightedValue;
             fields.push(
-                <FieldContainer key={i}>
+                <FieldContainer key={users[i].id}>
                     <SelectedCardContainer
                         onMouseEnter={() => handleMouseEnter(users[i].votedValue)}
                         onMouseLeave={handleMouseLeave}
                     >
                         <SelectedCard
-                            ref={(el: HTMLDivElement | null) => (cardRefs.current[i] = el)}
+                            ref={(el: HTMLDivElement | null) => { cardRefs.current[i] = el }}
                             flipped={flipCards}
                             value={users[i].votedValue}
                             highlighted={isHighlighted}
                         />
                     </SelectedCardContainer>
-                    <User ref={(el: HTMLDivElement | null) => (userRefs.current[i] = el)}>
+                    <User ref={(el: HTMLDivElement | null) => { userRefs.current[i] = el }}>
                         <UserName>
                             {users[i].name}
                         </UserName>

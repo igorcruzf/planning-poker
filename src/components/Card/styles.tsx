@@ -1,7 +1,8 @@
 import styled, {css} from "styled-components";
 import {animated} from "@react-spring/web";
+import type {CardColor} from "../CardHand/constants";
 
-const getCardColor = (color?: 'red' | 'black') => {
+const getCardColor = (color?: CardColor) => {
     switch (color) {
         case 'red':
             return css`
@@ -14,7 +15,7 @@ const getCardColor = (color?: 'red' | 'black') => {
     }
 };
 
-const getBackgroundCardColor = (color?: 'red' | 'black') => {
+const getBackgroundCardColor = (color?: CardColor) => {
     switch (color) {
         case 'red':
             return css`
@@ -28,12 +29,12 @@ const getBackgroundCardColor = (color?: 'red' | 'black') => {
 };
 
 
-export const Card = styled(animated.div)<{color: 'red' | 'black'}>`
+export const Card = styled(animated.div)<{$color: CardColor}>`
   height: 7rem;
   width: 4rem;
   background: white;
   border-radius: 1rem;
-  ${props => getCardColor(props.color)}
+  ${props => getCardColor(props.$color)}
   font-size: 1.5rem;
   text-align: center;
   vertical-align: middle;
@@ -64,16 +65,12 @@ export const CornerText = styled.span`
 `;
 
 export const MirroredCornerText = styled(CornerText)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
   transform: translateX(20%) translateY(30%) rotate(180deg);
 `;
 
-export const Diamond = styled.div<{scale: number, color: 'red' | 'black'}>`
-  width: ${({scale}) => scale * 20}px;
-  height: ${({scale}) => scale * 20}px;
-  ${props => getBackgroundCardColor(props.color)}
+export const Diamond = styled.div<{$scale: number, $color: CardColor}>`
+  width: ${({$scale}) => $scale * 20}px;
+  height: ${({$scale}) => $scale * 20}px;
+  ${props => getBackgroundCardColor(props.$color)}
   transform: rotate(45deg);
 `;

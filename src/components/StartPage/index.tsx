@@ -1,6 +1,6 @@
 import {Input, Label, StartButton, StartPageContainer, Title} from "./styles";
-import React, {useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import {type ChangeEvent, type FormEvent, useState} from "react";
+import { useNavigate } from 'react-router';
 
 
 const StartPage = () => {
@@ -8,27 +8,32 @@ const StartPage = () => {
     const [name, setName] = useState("")
     const [room, setRoom] = useState("Yak")
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const trimmedName = name.trim()
+    const trimmedRoom = room.trim()
+    const canStart = trimmedName !== "" && trimmedRoom !== ""
+
+    function handleChange(event: ChangeEvent<HTMLInputElement>) {
         setName(event.target.value);
     }
 
-    function handleChangeRoom(event: React.ChangeEvent<HTMLInputElement>) {
+    function handleChangeRoom(event: ChangeEvent<HTMLInputElement>) {
         setRoom(event.target.value);
     }
 
-    function handleStartClick(){
-        if(name.length !== 0 && room.length !== 0){
-            navigate('poker', {state: {name, room}})
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        if (canStart) {
+            navigate('/poker', {state: {name: trimmedName, room: trimmedRoom}})
         }
     }
 
-    return <StartPageContainer>
+    return <StartPageContainer onSubmit={handleSubmit}>
         <Title> YakPoker </Title>
-        <Label> Insira seu nome </Label>
-        <Input type={"text"} placeholder={""} value={name} onChange={handleChange}/>
-        <Label> Insira a sala </Label>
-        <Input type={"text"} placeholder={"Yak"} value={room} onChange={handleChangeRoom}/>
-        <StartButton onClick={handleStartClick}> Entrar </StartButton>
+        <Label htmlFor="name"> Insira seu nome </Label>
+        <Input id="name" type={"text"} placeholder={""} value={name} onChange={handleChange} autoFocus/>
+        <Label htmlFor="room"> Insira a sala </Label>
+        <Input id="room" type={"text"} placeholder={"Yak"} value={room} onChange={handleChangeRoom}/>
+        <StartButton type="submit" disabled={!canStart}> Entrar </StartButton>
     </StartPageContainer>
 }
 

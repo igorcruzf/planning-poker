@@ -1,6 +1,7 @@
 import './App.css'
 import PokerPage from "./components/PokerPage";
-import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
+import {Route, createBrowserRouter, createRoutesFromElements} from 'react-router';
+import {RouterProvider} from 'react-router/dom';
 import StartPage from "./components/StartPage";
 
 
@@ -14,11 +15,7 @@ const router = createBrowserRouter(
 )
 
 function App() {
-    return (
-        <>
-            <RouterProvider router={router}/>
-        </>
-    );
+    return <RouterProvider router={router}/>;
 }
 
 export default App

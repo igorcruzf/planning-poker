@@ -25,32 +25,30 @@ const getFrontBackground = (selected: boolean) => {
     }
 };
 
-export const SelectedCardContainer = styled.div<{ highlighted: string }>`
+export const SelectedCardContainer = styled.div<{ $highlighted: boolean }>`
   position: absolute;
   height: 7rem;
   width: 4rem;
-  
-    ${props => (props.highlighted === 'false') &&
-              `
-          opacity: 0.6;
-      `}
+  ${props => !props.$highlighted && css`
+    opacity: 0.6;
+  `}
 `;
 
-export const BackCardComponent = styled(animated.div)<{selected: boolean}>`
+export const BackCardComponent = styled(animated.div)<{$selected: boolean}>`
   position: absolute;
   height: inherit;
   width: inherit;
-  ${props => getBackground(props.selected)};
+  ${props => getBackground(props.$selected)};
   border: 1px solid #ffffff;
   background-size: 2rem 2rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 1rem;
 `;
 
-export const FrontCardComponent = styled(CardContainer)<{selected: boolean}>`
+export const FrontCardComponent = styled(CardContainer)<{$selected: boolean}>`
   position: absolute;
   height: inherit;
-  ${props => getFrontBackground(props.selected)};
+  ${props => getFrontBackground(props.$selected)};
   width: inherit;
   border: 2px;
 `;

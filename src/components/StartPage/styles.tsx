@@ -6,7 +6,7 @@ export const Title = styled.div `
   font-size: 5rem;
   margin-bottom: 5rem;
 `
-export const Label = styled.div`
+export const Label = styled.label`
   font-size: 2rem;
   color: #595959;
 `;
@@ -30,9 +30,14 @@ export const StartButton = styled.button `
   color: black;
   font-size: 1.5rem;
   margin-top: 3rem;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 `
 
-export const StartPageContainer = styled.div`
+export const StartPageContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;

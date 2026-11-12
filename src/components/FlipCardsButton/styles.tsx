@@ -7,4 +7,9 @@ export const Button = styled.button`
   border-radius: 10rem;
   background: #7b95e5;
   color: black;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 `;

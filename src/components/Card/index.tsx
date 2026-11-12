@@ -8,6 +8,13 @@ export interface CardProps {
     isSelected: boolean;
 }
 
+const diamondScaleByValue: Record<string, number> = {
+    PP: 0.7,
+    P: 0.9,
+    M: 1.1,
+    G: 1.5,
+}
+
 const Card = ({ value, onClick, isSelected }: CardProps) => {
     const animationProps = useSpring({
         to: {
@@ -15,26 +22,12 @@ const Card = ({ value, onClick, isSelected }: CardProps) => {
             transform: isSelected ? 'scale(1.2)' : 'scale(1.0)',
         }
     });
-
-    function getScaleSize(value: string) {
-        switch (value) {
-            case 'PP':
-                return 0.7
-            case 'P':
-                return 0.9
-            case 'M':
-                return 1.1
-            case 'G':
-                return 1.5
-            default:
-                return 0
-        }
-    }
+    const color = getCardColor(value)
 
     return (
-        <CardContainer style={animationProps} color={getCardColor(value)} onClick={onClick}>
+        <CardContainer style={animationProps} $color={color} onClick={onClick}>
             <CornerText>{value}</CornerText>
-            <Diamond scale={getScaleSize(value)} color={getCardColor(value)}/>
+            <Diamond $scale={diamondScaleByValue[value] ?? 0} $color={color}/>
             <MirroredCornerText>{value}</MirroredCornerText>
         </CardContainer>
     );

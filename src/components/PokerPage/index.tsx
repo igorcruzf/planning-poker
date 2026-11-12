@@ -1,69 +1,63 @@
-import Board, {UserData} from "../Board";
+import Board, {type UserData} from "../Board";
 import CardHand from "../CardHand";
-import {useEffect, useState} from "react";
+import {useCallback, useState} from "react";
 import {v4 as uuidv4} from "uuid";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Navigate, useLocation} from "react-router";
 
+interface PokerPageState {
+    name: string;
+    room: string;
+}
+
+function isValidPokerPageState(state: unknown): state is PokerPageState {
+    if (typeof state !== "object" || state === null) {
+        return false
+    }
+    const {name, room} = state as Record<string, unknown>
+    return typeof name === "string" && name.trim() !== "" && typeof room === "string" && room.trim() !== ""
+}
 
 const PokerPage = () => {
-    const [selectedCardValue, setSelectedCardValue] = useState<string>("")
-    const [shouldChangeCard, setShouldChangeCard] = useState(true)
-    const [isLoading, setIsLoading] = useState(true)
-    const [user, setUser] = useState<UserData>({
+    const {state} = useLocation()
+
+    if (!isValidPokerPageState(state)) {
+        return <Navigate to="/" replace/>
+    }
+
+    return <PokerRoom name={state.name} room={state.room}/>
+}
+
+const PokerRoom = ({name, room}: PokerPageState) => {
+    const [user, setUser] = useState<UserData>(() => ({
         id: uuidv4(),
-        name: "",
-        votedValue: selectedCardValue,
-        room: "",
-    });
-    const [updateUser, setUpdateUser] = useState(false)
+        name,
+        votedValue: "",
+        room,
+    }))
+    const [canChangeCard, setCanChangeCard] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
 
-    const location = useLocation()
-    const navigate = useNavigate()
+    const handleSelectCardValue = useCallback((votedValue: string) => {
+        setUser((prevUser) => ({...prevUser, votedValue}))
+    }, [])
 
-    useEffect( () => {
-        if(!location.state) {
-            navigate("/")
-        }
-        const { name, room } = location.state
+    const eraseUserVote = useCallback(() => handleSelectCardValue(""), [handleSelectCardValue])
 
-        setUser((prevState) => {
-            prevState.name = name
-            prevState.room = room
-            return prevState
-        })
-        setUpdateUser(true)
-    }, [location.state, navigate])
-
-    useEffect( () => {
-        setSelectedCardValue(user.votedValue)
-    }, [user])
-
-    function handleSelectCardValue(selectedValue: string) {
-        setUser((prevUser) => ({
-            ...prevUser,
-            votedValue: selectedValue,
-        }));
-    }
-
-    function handleShouldChangeCard(shouldChange: boolean) {
-        setShouldChangeCard(shouldChange)
-    }
-
-    function handleChangeIsLoading(isLoading: boolean) {
-        setIsLoading(isLoading)
-    }
-
-    function eraseUserVote() {
-        handleSelectCardValue("")
-    }
-
-
-    return <> {
-        !updateUser? <></> : <>
-            <Board user={user} eraseUserVote={eraseUserVote} handleShouldChangeCard={handleShouldChangeCard} isLoading={isLoading} handleChangeIsLoading={handleChangeIsLoading} />
-            <CardHand cardValue={selectedCardValue} handleSelectCardValue={handleSelectCardValue} shouldChangeCard={shouldChangeCard} isLoading={isLoading}/>
-        </>
-    } </>
+    return <>
+        <Board
+            user={user}
+            eraseUserVote={eraseUserVote}
+            handleShouldChangeCard={setCanChangeCard}
+            isLoading={isLoading}
+            handleChangeIsLoading={setIsLoading}
+        />
+        <CardHand
+            cardValue={user.votedValue}
+            handleSelectCardValue={handleSelectCardValue}
+            shouldChangeCard={canChangeCard}
+            isLoading={isLoading}
+        />
+    </>
 }
 
 export default PokerPage

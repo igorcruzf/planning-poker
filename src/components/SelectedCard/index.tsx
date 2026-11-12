@@ -1,4 +1,4 @@
-import React from "react";
+import type {Ref} from "react";
 import {BackCardComponent, SelectedCardContainer, FrontCardComponent} from "./styles";
 import {useSpring} from "@react-spring/web";
 import Card from "../Card";
@@ -8,23 +8,25 @@ interface SelectedCardProps {
     value: string;
     flipped: boolean;
     highlighted: boolean;
+    ref?: Ref<HTMLDivElement>;
 }
 
-const SelectedCard = React.forwardRef<HTMLDivElement, SelectedCardProps>(({value, flipped, highlighted}: SelectedCardProps, ref) => {
+const SelectedCard = ({value, flipped, highlighted, ref}: SelectedCardProps) => {
 
     const { transform, opacity } = useSpring({
         opacity: flipped ? 1 : 0,
         transform: `rotateY(${flipped ? 180 : 0}deg)`,
         config: { mass: 5, tension: 500, friction: 80 },
     })
+    const hasVoted = value !== ""
 
     return (
-        <SelectedCardContainer highlighted={highlighted.toString()} ref={ref}>
-            <BackCardComponent selected={value != ""} style={{
+        <SelectedCardContainer $highlighted={highlighted} ref={ref}>
+            <BackCardComponent $selected={hasVoted} style={{
                 opacity: opacity.to(o => 1 - o),
                 transform
             }}/>
-            <FrontCardComponent color={getCardColor(value)} selected={value != ""} style={{
+            <FrontCardComponent $color={getCardColor(value)} $selected={hasVoted} style={{
                 opacity: opacity,
                 transform,
                 rotateY: '-180deg'
@@ -33,6 +35,6 @@ const SelectedCard = React.forwardRef<HTMLDivElement, SelectedCardProps>(({value
             </FrontCardComponent>
         </SelectedCardContainer>
     );
-});
+};
 
 export default SelectedCard;

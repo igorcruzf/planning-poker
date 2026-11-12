@@ -1,8 +1,7 @@
 import {Spinner, Wrapper} from "./styles";
-import React from "react";
 import {useSpring} from "@react-spring/web";
 
-const Loading: React.FC = () => {
+const Loading = () => {
     const springProps1 = useSpring({
         from: { transform: 'rotate(0deg)' },
         to: { transform: 'rotate(360deg)' },
@@ -18,8 +17,8 @@ const Loading: React.FC = () => {
     });
 
     return <Wrapper>
-        <Spinner color={'red'} style={springProps1}/>
-        <Spinner color={'red'} style={springProps2}/>
+        <Spinner $color={'red'} style={springProps1}/>
+        <Spinner $color={'red'} style={springProps2}/>
     </Wrapper>
 };
 
